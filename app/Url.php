@@ -12,6 +12,7 @@ class Url extends Model
 
   protected $dates = ['deleted_at'];
 	protected $hidden = ['pivot', 'updated_at', 'deleted_at'];
+	protected $fillable = array('title', 'url', 'description', 'list_id');
 
   public function tags()
   {

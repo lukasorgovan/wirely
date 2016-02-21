@@ -17,6 +17,46 @@ class UrlController extends Controller
 		return $urls;
   }
 
+  public function store(Request $request, $listId) {
+		$data = $request->all();
+		$data["list_id"] = $listId;
+		$tags = $data["tags"];
+		$newTags = array();
+
+		unset($data["tags"]);
+		
+
+		$success = DB::beginTransaction();
+
+		try {
+			$url = new Url;
+			$url->fill($data);
+			$url->save();
+
+			$i = 0;
+			foreach ($tags as $tag) {
+				array_push($newTags, array("tag_id" => $tag, "url_id" => $url->id));
+				$i++;
+			}
+
+			DB::table('url_tags')->insert($newTags);
+			DB::commit();
+
+			return response()->json(array(
+	    		'success' => true, 
+	    		'id' => $url->id
+	   	));
+		} catch (\Exception $e) {
+    	DB::rollback();
+
+    	return response()->json(array(
+	    		'success' => false
+	   	));
+    }
+
+		print_r($success);
+  }
+
   public function destroy($listId, $urlId) {
 
 		$success = Url::where('id', $urlId)->delete();
