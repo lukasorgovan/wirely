@@ -19,24 +19,28 @@ class ListController extends Controller
     public function destroy($uuid) {
     	$numRowsDeleted = DB::table('lists')->where('uuid', $uuid)->delete();
     	$success = $numRowsDeleted > 0 ? true : false;
-
-    	return response()->json(array(
-    		'success' => $success,
-    	));
+        
+        if ($success) {
+    	   return response('', 204);
+        } else {
+            return response('', 400);
+        }
     }
 
     public function update(Request $request, $uuid) {
-    	$listTitle = $request->input('title');
+    	$data = $request->all();
     	$success = false;
 
-    	if ($listTitle != '') {
-	    	$numRowsDeleted = DB::table('lists')->where('uuid', $uuid)->update(['title' => $listTitle]);
-	    	$success = $numRowsDeleted > 0 ? true : false;
+    	if ($data["title"] != '') {
+	    	$numRowsUpdtated = DB::table('lists')->where('uuid', $uuid)->update(['title' => $data["title"]]);
+	    	$success = $numRowsUpdtated > 0 ? true : false;
 	    }
 
-    	return response()->json(array(
-    		'success' => $success,
-    	));
+        if ($success) {
+    	   return response('',204);
+        } else {
+            return response('', 400);
+        }
     }
 
     public function store(Request $request) {
@@ -56,15 +60,12 @@ class ListController extends Controller
 
     		if ($success) {
 	    		return response()->json(array(
-	    			'success' => true,
 	    			'uuid' => $uniqueId
-	    		));
+	    		), 201);
 	    	}
     	}
     	
-    	return response()->json(array(
-    		'success' => false,
-    	));
+    	return response('', 400);
     }
     
 }

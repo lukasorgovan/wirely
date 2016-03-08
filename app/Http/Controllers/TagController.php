@@ -27,18 +27,15 @@ class TagController extends Controller
 		    			['title' => $tagTitle]
 		    	);
 		    	return response()->json(array(
-    				'success' => true,
     				'id' => $id
-    			));
+    			), 201);
 
 	      } catch (\Exception $e) {
 	      	// no need to handle
 	      }
     	}
     	
-    	return response()->json(array(
-    		'success' => false,
-    	));
+    	return response('', 400);
     }
 
 }
