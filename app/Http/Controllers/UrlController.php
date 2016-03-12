@@ -42,33 +42,26 @@ class UrlController extends Controller
 			DB::table('url_tags')->insert($newTags);
 			DB::commit();
 
+
 			return response()->json(array(
-	    		'success' => true, 
-	    		'id' => $url->id
-	   	));
+				'id' => $url->id
+			), 201);
+	
 		} catch (\Exception $e) {
     	DB::rollback();
 
-    	return response()->json(array(
-	    		'success' => false
-	   	));
+	  	return response('', 400);	
     }
-
-		print_r($success);
   }
 
   public function destroy($listId, $urlId) {
 
 		$success = Url::where('id', $urlId)->delete();
 		
-		if ($success) {
-			return response()->json(array(
-	    		'success' => true
-	   	));
-	  }
+	 if ($success) {
+	   return response('', 204);
+  	}
 
-	  return response()->json(array(
-  		'success' => false
-   	));
+    return response('', 400);
   }
 }

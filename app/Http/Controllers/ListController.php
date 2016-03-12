@@ -22,9 +22,9 @@ class ListController extends Controller
         
         if ($success) {
     	   return response('', 204);
-        } else {
-            return response('', 400);
-        }
+        } 
+    
+        return response('', 400);
     }
 
     public function update(Request $request, $uuid) {
@@ -38,9 +38,9 @@ class ListController extends Controller
 
         if ($success) {
     	   return response('',204);
-        } else {
-            return response('', 400);
         }
+    
+       return response('', 400);
     }
 
     public function store(Request $request) {
