@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['prefix' => 'api'], function() {
+Route::group(['prefix' => 'api', 'middleware' => 'cors'], function() {
 	Route::resource('lists', 'ListController');
 	Route::resource('lists.urls', 'UrlController');
 	Route::resource('tags', 'TagController');
