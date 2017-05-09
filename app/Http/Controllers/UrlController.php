@@ -18,7 +18,7 @@ class UrlController extends Controller
   }
 
   public function store(Request $request, $listId) {
-		$data = $request->all();
+		$data = $request->json();
 		$data["list_id"] = $listId;
 		$tags = $data["tags"];
 		$newTags = array();

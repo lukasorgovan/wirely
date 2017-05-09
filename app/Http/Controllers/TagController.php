@@ -19,7 +19,8 @@ class TagController extends Controller
     }
 
     public function store(Request $request) {
-    	$tagTitle = $request->input('title');
+    	$data = $request->json();
+        $tagTitle = $data['title'];
 
     	if ($tagTitle != '') {
     		try {

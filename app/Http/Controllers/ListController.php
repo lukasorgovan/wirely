@@ -28,9 +28,9 @@ class ListController extends Controller
     }
 
     public function update(Request $request, $uuid) {
-    	$data = $request->all();
+    	$data = $request->json();
     	$success = false;
-
+        print_r($data);
     	if ($data["title"] != '') {
 	    	$numRowsUpdtated = DB::table('lists')->where('uuid', $uuid)->update(['title' => $data["title"]]);
 	    	$success = $numRowsUpdtated > 0 ? true : false;
@@ -44,7 +44,8 @@ class ListController extends Controller
     }
 
     public function store(Request $request) {
-    	$listTitle = $request->input('title');
+    	$data = $request->json();
+        $listTitle = $data['title'];
 
     	if ($listTitle != '') {
     		$storedUuids = DB::table('lists')->select('uuid')->get();
