@@ -28,7 +28,7 @@ class ListController extends Controller
     }
 
     public function update(Request $request, $uuid) {
-    	$data = $request->json();
+    	$data = $request->json()->all();
     	$success = false;
         print_r($data);
     	if ($data["title"] != '') {
@@ -44,7 +44,7 @@ class ListController extends Controller
     }
 
     public function store(Request $request) {
-    	$data = $request->json();
+    	$data = $request->json()->all();
         $listTitle = $data['title'];
 
     	if ($listTitle != '') {
